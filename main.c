@@ -16,8 +16,7 @@
 #include <sys/file.h>
 #include <sys/mman.h>
 
-#define DEBUG 1
-#define LR_DECAY 0
+#define DEBUG 0
 uint DSS = 0;       // dataset size (num of 1-byte unsigned)
 uint SONGLEN = 0;   // song size also in bytes
 unsigned char* train_x;
@@ -196,17 +195,10 @@ int main()
     // setWeightInit(&net, WEIGHT_INIT_NORMAL_GLOROT);
     // setGain(&net, 1.f);
     // setUnitDropout(&net, 0.f);
-    setLearningRate(&net, 0.001f);
+    setLearningRate(&net, 0.003f);
     setActivator(&net, TANH);
     setOptimiser(&net, OPTIM_ADAGRAD);
     setBatches(&net, 1);
-    
-#if LR_DECAY == 1
-    // learning rate decay
-    setLearningRate(&net, 0.1f);
-    EPOCHS = 66000;
-    const f32 lr_rr = 0.09999f / (f32)EPOCHS; // learning rate _ reduction rate
-#endif
 
     // train network
     uint epochs_per_second = 0;
@@ -230,6 +222,9 @@ int main()
             if(time(0) > lt)
             {
                 static uint ls = 0;
+#if DEBUG == 1
+                layerStat(&net);
+#endif
                 printf("[%'u/%'u] < [%'u]\n", i, DSS, DSS-i);
                 printf("[%u] loss: %g\n", i, loss);
                 printf("[%u] avg loss: %g\n", i, epoch_loss/i);
@@ -244,26 +239,6 @@ int main()
 
         printf("[%u] epoch loss: %g\n", j, epoch_loss);
         printf("[%u] avg epoch loss: %g\n\n", j, epoch_loss/DSS);
-
-#if DEBUG == 1
-        layerStat(&net);
-#endif
-
-#if LR_DECAY == 1
-        // learning rate decay
-        const f32 nlr = 0.1f-(lr_rr*(f32)j);
-        setLearningRate(&net, nlr);
-        printf("LR: %g\n", nlr);
-#endif
-
-        epochs_per_second++;
-        static uint64_t lt = 0;
-        if(microtime() > lt)
-        {
-            epoch_seconds++;
-            lt = microtime()+1000000;
-        }
-        printf("EPS: %u\n\n", epochs_per_second/epoch_seconds); // epochs per second
     }
 
     // training done let's use the trained network to produce an output
