@@ -1,6 +1,7 @@
 # neural_filter_tfcnn
 A Feed-forward Neural Network trained to learn a low-pass filter using TFCNNv3.
 
+## Preamble
 Originally I used Tensorflow Keras to train the original model [in this repository](https://github.com/jcwml/neural_filter). In that version the training sets are split into 9 sample chunks and a FNN is trained to take in 9 samples and output 9 filtered samples, obviously this is not great for continuity but it was easy to implement using only the high-level Python API for Tensorflow Keras, the original idea was to take 9 samples as input and output one sample and then shift the input one sample forward so that the input was always one sample increments with its four neighbours either side and that is what I have implemented in this version and [TFCNNv3](https://github.com/TFCNN/TFCNNv3) made that job a lot easier for me.
 
 The output is still not great and to be honest not that different from the original but the frequency spectra graph now looks a lot cleaner, in the original Keras version you could see the effect of the rigid 9 input sample chunks in the output frequency spectra.
