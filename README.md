@@ -9,5 +9,5 @@ The output is still not great and to be honest not that different from the origi
 To generate your input files, I used Audacity, Generate > Noise, save that as train_x.raw as Unsigned 8-bit PCM, then apply a low-pass filter to it and save that as train_y.raw in the same format as last time. Then find a song, load it into Audacity, Tracks > Mix > Mix Stereo Down to Mono, then export that as song.raw as Unsigned 8-bit PCM again. Once these three files are placed in the same directory as fit.py you should now be able to execute python3 fit.py 6 32 999 tanh adam 1 9 32. The training process will also generate your first neural transformation of your song.raw and output it as song_output.raw.
 
 ## Compile
-Just chmod 0700 or similar and execute `compile.sh` you will need GCC installed, you can find GCC in most __(if not all)__ package managers.
+Just chmod 0700 or similar and execute `compile.sh` you will need GCC installed, you can find GCC in most _(if not all)_ package managers.
 
