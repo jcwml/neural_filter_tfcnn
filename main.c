@@ -18,8 +18,8 @@
 
 #define DEBUG 1
 #define LR_DECAY 0
-uint DSS = 0;   // dataset size (num of 1-byte unsigned)
-uint SONGLEN = 0; // song size also in bytes
+uint DSS = 0;       // dataset size (num of 1-byte unsigned)
+uint SONGLEN = 0;   // song size also in bytes
 unsigned char* train_x;
 unsigned char* train_y;
 unsigned char* song;
