@@ -239,7 +239,7 @@ int main()
             }
 
             // !!! YOU MAY WANT TO COMMENT OUT THIS LINE
-            if(epoch_loss/i < 2.f){generate_output(0);}
+            if(i > 600333 && epoch_loss/i < 0.5f){generate_output(0);}
         }
 
         printf("[%u] epoch loss: %g\n", j, epoch_loss);
