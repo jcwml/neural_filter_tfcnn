@@ -6,6 +6,8 @@ Originally I used Tensorflow Keras to train the original model [in this reposito
 
 The output is still not great and to be honest not that different from the original but the frequency spectra graph now looks a lot cleaner, in the original Keras version you could see the effect of the rigid 9 input sample chunks in the output frequency spectra.
 
+Technically it would be better if I normalised the input and output data to -1 to 1 and then scaled back to 0 to 255 in the quantisation step, but honestly, I don't think it would make that much difference.
+
 ## How to generate the training dataset
 To generate your input files, I used Audacity, Generate > Noise, save that as `train_x.raw` as Unsigned 8-bit PCM, then apply a low-pass filter to it and save that as `train_y.raw` in the same format as last time. Then find a song, load it into Audacity, Tracks > Mix > Mix Stereo Down to Mono, then export that as `song.raw` as Unsigned 8-bit PCM again. Once these three files are placed in the same project directory as `compile.sh` you should now be able to execute `compile.sh` which will compile and execute the training process. The training process will generate the first neural transformation of your `song.raw` and output it as `song_output.raw`. You may find it useful to apply a Normalize filter on the `song_output.raw` in Audacity as usually the output will have a small amplitude scale.
 
