@@ -238,7 +238,7 @@ int main()
         }
 
         printf("[%u] epoch loss: %g\n", j, epoch_loss);
-        printf("[%u] avg epoch loss: %g\n\n", j, epoch_loss/DSS);
+        printf("[%u] avg epoch loss: %g\n\n", j, epoch_loss/(DSS4-4));
     }
 
     // training done let's use the trained network to produce an output
