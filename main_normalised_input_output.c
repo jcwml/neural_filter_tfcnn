@@ -227,7 +227,7 @@ int main()
 #endif
                 printf("[%'u/%'u] < [%'u]\n", i, DSS, DSS-i);
                 printf("[%u] loss: %g\n", i, loss);
-                printf("[%u] avg loss: %g\n", i, epoch_loss/i);
+                printf("[%u] avg loss: %g\n", i, epoch_loss/(i-4));
                 printf("[%u] delta-iter: %'u\n\n", i, i-ls);
                 lt = time(0)+3;
                 ls = i;
