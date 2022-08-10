@@ -206,7 +206,7 @@ int main()
     for(uint j=0; j < EPOCHS; j++)
     {
         f32 epoch_loss = 0.f;
-        const int DSS4 = DSS-4;
+        const uint DSS4 = DSS-4;
         for(uint i=4; i < DSS4; i++)
         {
             const int ofs = i-4;
