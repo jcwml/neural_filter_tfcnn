@@ -10,7 +10,7 @@ Technically it would be better if I normalised the input and output data to -1 t
 
 I have provided one last solution [main_float32_training_inputs.c](main_float32_training_inputs.c) which takes native float32 raw audio exports from Audacity, these come pre-normalised between -1 and 1, and then expects an unsigend 8-bit input `song.raw` to produce a transformed unsigned 8-bit output `song_output.raw`.
 
-The three solutions are basically the same source code with minor modifications, this could have been presented in one source file with `ifdef` tags but to avoid confusion I felt it better to seperate the source files for the three methods.
+The three solutions are basically the same source code with minor modifications, this could have been presented in one source file with `#ifdef` tags but to avoid confusion I felt it better to seperate the source files for the three methods.
 
 ## How to generate the training dataset
 To generate your input files, I used Audacity, Generate > Noise, save that as `train_x.raw` as Unsigned 8-bit PCM, then apply a low-pass filter to it and save that as `train_y.raw` in the same format as last time. Then find a song, load it into Audacity, Tracks > Mix > Mix Stereo Down to Mono, then export that as `song.raw` as Unsigned 8-bit PCM again. Once these three files are placed in the same project directory as `compile.sh` you should now be able to execute `compile.sh` which will compile and execute the training process. The training process will generate the first neural transformation of your `song.raw` and output it as `song_output.raw`. You may find it useful to apply a Normalize filter on the `song_output.raw` in Audacity as usually the output will have a small amplitude scale.
