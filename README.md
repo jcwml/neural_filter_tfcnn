@@ -6,7 +6,7 @@ Originally I used Tensorflow Keras to train the original model [in this reposito
 
 The output is still not great and to be honest not that different from the original but the frequency spectra graph now looks a lot cleaner, in the original Keras version you could see the effect of the rigid 9 input sample chunks in the output frequency spectra.
 
-Technically it would be better if I normalised the input and output data to -1 to 1 and then scaled back to 0 to 255 in the quantisation step, but honestly, I don't think it would make that much difference. Although, I did a test, trained for 1 hour and 15 minutes and it's actually better with normalised inputs; [main_normalised_input_output.c](main_normalised_input_output.c). I actually liked it so much that I have uploaded the trained network file [normalised_input_output.save](normalised_input_output.save) so that you can load it and run it on your own audio files and see the result, it's still noisy but I think it's really an improvement over the previous iterations.
+Technically it would be better if I normalised the input and output data to -1 to 1 and then scaled back to 0 to 255 in the quantisation step, but honestly, I don't think it would make that much difference. Although, I did a test, trained for 1 hour and 15 minutes and it's actually better with normalised inputs; [main_normalised_input_output.c](main_normalised_input_output.c).
 
 I have provided one last solution [main_float32_training_inputs.c](main_float32_training_inputs.c) which takes native float32 raw audio exports from Audacity, these come pre-normalised between -1 and 1, and then expects an unsigend 8-bit input `song.raw` to produce a transformed unsigned 8-bit output `song_output.raw`.
 
