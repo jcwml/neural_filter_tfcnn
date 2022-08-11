@@ -8,7 +8,7 @@ The output is still not great and to be honest not that different from the origi
 
 Technically it would be better if I normalised the input and output data to -1 to 1 and then scaled back to 0 to 255 in the quantisation step, but honestly, I don't think it would make that much difference. Although, I did a test, trained for 1 hour and 15 minutes and it's actually better with normalised inputs; [main_normalised_input_output.c](main_normalised_input_output.c).
 
-I have provided one last solution [main_float32_training_inputs.c](main_float32_training_inputs.c) which takes native float32 raw audio exports from Audacity, these come pre-normalised between -1 and 1, and then expects an unsigend 8-bit input `song.raw` to produce a transformed unsigned 8-bit output `song_output.raw`.
+I have provided one last solution [main_float32_training_inputs.c](main_float32_training_inputs.c) which takes native float32 raw audio exports from Audacity, these come pre-normalised between -1 and 1, and then expects an unsigned 8-bit input `song.raw` to produce a transformed unsigned 8-bit output `song_output.raw`.
 
 The three solutions are basically the same source code with minor modifications, this could have been presented in one source file with `#ifdef` tags but to avoid confusion I felt it better to seperate the source files for the three methods of presenting/normalising the training data.
 
