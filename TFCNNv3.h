@@ -47,6 +47,7 @@
 
 #define FAST_PREDICTABLE_MODE
 #define NOSSE
+#define VERBOSE
 
 #ifndef NOSSE
     #include <x86intrin.h>
@@ -754,24 +755,11 @@ void randomHyperparameters(network* net)
 
 void layerStat(network* net)
 {
-    // input layer
-    const f32 input_divisor_reciprocal = 1.f/(net->num_layerunits*net->layer[0][0].weights);
     f32 min=0.f, avg=0.f, max=0.f;
-    for(int j = 0; j < net->num_outputs; j++)
-    {
-        for(uint k = 0; k < net->layer[0][j].weights; k++)
-        {
-            const f32 w = net->layer[0][j].data[k];
-            if(w < min){min = w;}
-            else if(w > max){max = w;}
-            avg += w;
-        }
-    }
-    printf("0: %.3f %.3f %.3f [%.3f]\n", min, avg*input_divisor_reciprocal, max, avg);
-
-    // hidden layers
+    
+    // layers
     const f32 hidden_divisor_reciprocal = 1.f/(net->num_layerunits*net->layer[1][0].weights);
-    for(int i = 1; i < net->num_layers-1; i++)
+    for(int i = 0; i < net->num_layers-1; i++)
     {
         min=0.f, avg=0.f, max=0.f;
         for(int j = 0; j < net->num_layerunits; j++)
@@ -784,7 +772,7 @@ void layerStat(network* net)
                 avg += w;
             }
         }
-        printf("%i: %.3f %.3f %.3f [%.3f]\n", i, min, avg*hidden_divisor_reciprocal, max, avg);
+        printf("%i: %+.3f %+.3f %+.3f [%+.3f]\n", i, min, avg*hidden_divisor_reciprocal, max, avg);
     }
 
     // output layer
@@ -800,7 +788,7 @@ void layerStat(network* net)
             avg += w;
         }
     }
-    printf("%i: %.3f %.3f %.3f [%.3f]\n", net->num_layers-1, min, avg*output_divisor_reciprocal, max, avg);
+    printf("%i: %+.3f %+.3f %+.3f [%+.3f]\n", net->num_layers-1, min, avg*output_divisor_reciprocal, max, avg);
 }
 
 int createNetwork(network* net, const uint init_weights_type, const uint inputs, const uint num_outputs, const uint hidden_layers, const uint layers_size, const uint default_settings)
@@ -1261,6 +1249,7 @@ void destroyNetwork(network* net)
     free(net->layer[net->num_layers-1][0].momentum);
     free(net->layer[net->num_layers-1]);
     free(net->layer);
+    net->layer = NULL;
 
     // free output buffers
     for(int i = 0; i < net->num_layers-1; i++)
@@ -1440,7 +1429,9 @@ int saveNetwork(network* net, const char* file)
     layerStat(net);
 #endif
 
-    for(int i = 0; i < net->num_inputs; i++)
+    ///
+
+    for(int i = 0; i < net->num_layerunits; i++)
     {
         if(fwrite(&net->layer[0][i].data[0], 1, net->num_inputs*sizeof(f32), f) != net->num_inputs*sizeof(f32))
         {
@@ -1466,6 +1457,8 @@ int saveNetwork(network* net, const char* file)
             return -1023;
         }
     }
+
+    ///
 
     for(int i = 1; i < net->num_layers-1; i++)
     {
@@ -1497,6 +1490,8 @@ int saveNetwork(network* net, const char* file)
         }
     }
 
+    ///
+
     for(int i = 0; i < net->num_outputs; i++)
     {
         if(fwrite(&net->layer[net->num_layers-1][i].data[0], 1, net->num_layerunits*sizeof(f32), f) != net->num_layerunits*sizeof(f32))
@@ -1524,7 +1519,8 @@ int saveNetwork(network* net, const char* file)
         }
     }
 
-    //
+    ///
+
     fclose(f);
     return 0;
 }
@@ -1706,7 +1702,7 @@ int loadNetwork(network* net, const char* file)
 
     ///
 
-    for(int i = 0; i < net->num_inputs; i++)
+    for(int i = 0; i < net->num_layerunits; i++)
     {
         if(fread(&net->layer[0][i].data[0], 1, net->num_inputs*sizeof(f32), f) != net->num_inputs*sizeof(f32))
         {
@@ -1795,6 +1791,7 @@ int loadNetwork(network* net, const char* file)
     }
 
     ///
+    
     fclose(f);
 #ifdef VERBOSE
     layerStat(net);
