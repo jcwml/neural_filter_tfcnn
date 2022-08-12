@@ -195,7 +195,7 @@ int main()
     // setWeightInit(&net, WEIGHT_INIT_NORMAL_GLOROT);
     // setGain(&net, 1.f);
     // setUnitDropout(&net, 0.f);
-    setLearningRate(&net, 0.003f);
+    setLearningRate(&net, 0.001f);
     setActivator(&net, TANH);
     setOptimiser(&net, OPTIM_ADAGRAD);
     setBatches(&net, 1);
