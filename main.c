@@ -1,5 +1,5 @@
 // Jim C. Williams (github.com/jcwml)
-// gcc main.c -lm -Ofast -mavx -mfma -o main
+// gcc main.c -lm -Ofast -mfma -o main
 // I have used the TFCNNv3 library (github.com/tfcnn)
 // by James William Fletcher to teach a neural network
 // to learn a fixed frequency cutoff filter
